@@ -6,6 +6,7 @@ package uk.ac.ebi;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
@@ -278,8 +279,10 @@ public class BrainQueryTest {
 	public void getAnnotationArrayTest() throws BrainException {
 		List<String> annotations = brain.getAnnotations("G", "testing");
 		assertEquals(2, annotations.size());
-		assertEquals("value2", annotations.get(0));
-		assertEquals("value1", annotations.get(1));
+		// fix sorting, underlying data structure is a set, so order in the list is not guaranteed.
+		Collections.sort(annotations); 
+		assertEquals("value1", annotations.get(0));
+		assertEquals("value2", annotations.get(1));
 	}
 
 	@Test
